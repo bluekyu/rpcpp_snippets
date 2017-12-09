@@ -48,9 +48,9 @@ public:
     void hide();
 
 protected:
-    void button_on_clicked(const std::shared_ptr<void>& param);
-    void slider_on_changed(const std::shared_ptr<void>& param);
-    void checkbox_on_clicked(const std::shared_ptr<void>& param);
+    void button_on_clicked();
+    void slider_on_changed();
+    void checkbox_on_clicked(bool status);
 
 private:
     rpcore::RenderPipeline& pipeline_;
