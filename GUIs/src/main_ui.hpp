@@ -30,6 +30,7 @@ namespace rppanda {
 class DirectButton;
 class DirectSlider;
 class DirectCheckBox;
+class DirectEntry;
 }
 
 namespace rpcore {
@@ -51,6 +52,7 @@ protected:
     void button_on_clicked();
     void slider_on_changed();
     void checkbox_on_clicked(bool status);
+    void entry_on_changed(const std::string& text);
 
 private:
     rpcore::RenderPipeline& pipeline_;
@@ -60,6 +62,8 @@ private:
     PT(rppanda::DirectButton) button_;
     PT(rppanda::DirectSlider) slider_;
     PT(rppanda::DirectCheckBox) checkbox_;
+    PT(rppanda::DirectEntry) entry_;
     rppanda::OnscreenText button_text_;
     rppanda::OnscreenText checkbox_text_;
+    rppanda::OnscreenText entry_text_;
 };

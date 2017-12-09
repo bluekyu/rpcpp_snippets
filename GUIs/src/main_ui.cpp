@@ -27,6 +27,7 @@
 #include <render_pipeline/rppanda/gui/direct_button.hpp>
 #include <render_pipeline/rppanda/gui/direct_slider.hpp>
 #include <render_pipeline/rppanda/gui/direct_check_box.hpp>
+#include <render_pipeline/rppanda/gui/direct_entry.hpp>
 #include <render_pipeline/rppanda/showbase/showbase.hpp>
 #include <render_pipeline/rpcore/globals.hpp>
 #include <render_pipeline/rpcore/render_pipeline.hpp>
@@ -83,6 +84,22 @@ MainUI::MainUI(rpcore::RenderPipeline& pipeline): pipeline_(pipeline)
     checkbox_options->image ={ std::make_shared<rppanda::ImageInput>(unchecked_img) };
     checkbox_options->checkbox_command = std::bind(&MainUI::checkbox_on_clicked, this, std::placeholders::_1);
     checkbox_ = new rppanda::DirectCheckBox(ui_root_, checkbox_options);
+
+    // create OnscreenText using methods
+    entry_text_ = rppanda::OnscreenText("Entry: ");
+    entry_text_.reparent_to(ui_root_);
+    entry_text_.set_pos(LVecBase2(0.8f, -0.24f));
+    entry_text_.set_scale(LVecBase2(0.04f));
+    entry_text_.set_fg(LColor(1, 1, 1, 1));
+    entry_text_.set_shadow(LColor(0, 0, 0, 1));
+    entry_text_.set_align(TextProperties::A_left);
+
+    auto entry_options = std::make_shared<rppanda::DirectEntry::Options>();
+    entry_options->initial_text = "Text Entry";
+    entry_options->command = std::bind(&MainUI::entry_on_changed, this, std::placeholders::_1);
+    entry_options->pos = LVecBase3(0.8f, 0, -0.32f);
+    entry_options->scale = LVecBase3(0.04f);
+    entry_ = new rppanda::DirectEntry(ui_root_, entry_options);
 }
 
 MainUI::~MainUI()
@@ -122,4 +139,9 @@ void MainUI::checkbox_on_clicked(bool status)
         checkbox_text_.set_text("CheckBox Status: On");
     else
         checkbox_text_.set_text("CheckBox Status: Off");
+}
+
+void MainUI::entry_on_changed(const std::string& text)
+{
+    entry_text_.set_text("Entry: " + text);
 }
