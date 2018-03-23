@@ -20,6 +20,7 @@ endif()
 # subdirectory
 set(rpcpp_snippets_list
     "GUIs"
+    "primitives"
 )
 
 foreach(snippet_id ${rpcpp_snippets_list})

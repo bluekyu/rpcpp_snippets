@@ -2,8 +2,8 @@
 # Date  : 2017-05-12
 
 cmake_minimum_required(VERSION 3.9)
-project(GUIs
-    DESCRIPTION "GUI sample"
+project(primitives
+    DESCRIPTION "Primitives sample"
 )
 
 # === configure ====================================================================================
@@ -16,8 +16,8 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)    # Project Grouping
 # set input files
 set(sources_files
     "${PROJECT_SOURCE_DIR}/src/main.cpp"
-    "${PROJECT_SOURCE_DIR}/src/main_ui.cpp"
-    "${PROJECT_SOURCE_DIR}/src/main_ui.hpp"
+    "${PROJECT_SOURCE_DIR}/src/world.cpp"
+    "${PROJECT_SOURCE_DIR}/src/world.hpp"
 )
 
 # grouping
@@ -30,7 +30,9 @@ add_executable(${PROJECT_NAME} ${sources_files})
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_14)
 if(MSVC)
     windows_add_longpath_manifest(${PROJECT_NAME})
-    target_compile_options(${PROJECT_NAME} PRIVATE /MP /wd4251)
+    target_compile_options(${PROJECT_NAME} PRIVATE /MP /wd4251
+        $<$<VERSION_GREATER:${MSVC_VERSION},1900>:/permissive- /utf-8>
+    )
     set_property(TARGET ${PROJECT_NAME} APPEND_STRING PROPERTY LINK_FLAGS_RELWITHDEBINFO    " /INCREMENTAL:NO /OPT:REF /OPT:ICF ")
     set_property(TARGET ${PROJECT_NAME} APPEND_STRING PROPERTY LINK_FLAGS_RELEASE           " /INCREMENTAL:NO /OPT:REF /OPT:ICF ")
 else()
